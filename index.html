@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+    <title>codejam-eldritch</title>
+    <link rel="stylesheet" href="./src/style.css">
+</head>
+<body>
+   <div class="wrapper">
+    <h2 class="h2">Выберите Древнего:</h2>
+    <div class="ancients">
+        <div class="Azathoth imageBackground"><img class="card" src="./src/assets/Ancients/Azathoth.png"></div>
+        <div class="Cthulhu"><img class="card " src="./src/assets/Ancients/Cthulthu.png"></div>
+        <div class="YogSothoth"><img class="card" src="./src/assets/Ancients/IogSothoth.png"></div>
+        <div class="ShubNiggurath"><img class="card" src="./src/assets/Ancients/ShubNiggurath.png"></div>
+    </div>
+    <h2 class="h2">Выберите уровень сложности:</h2>
+    <form class="levels">
+        <button class="tags">Очень легкий</button>
+        <button class="tags">Легкий</button>
+        <button class="tags">Средний</button>
+        <button class="tags">Высокий</button>
+        <button class="tags">Очень&nbspвысокий</button>
+    </form>
+    <button class="mix_button">Замешать колоду мифов</button>
+    <div class="mythos_deck">
+        <h3>Колода мифов:</h3>
+        <!-- <div class="stage1">
+            <p>Этап I:</p>
+            <div class="stages">
+                <div class="green">1</div>
+                <div class="brown">1</div>
+                <div class="blue">1</div>
+            </div>
+        </div>
+        <div class="stage2">
+            <p>Этап II:</p>
+            <div class="stages">
+                <div class="green">1</div>
+                <div class="brown">1</div>
+                <div class="blue">1</div>
+            </div>
+        </div>
+        <div class="stage3">
+            <p>Этап III:</p>
+            <div class="stages">
+                <div class="green">1</div>
+                <div class="brown">1</div>
+                <div class="blue">1</div>
+            </div>
+        </div> -->
+        <div class="desk">
+            <div class="column_stages">
+                <p>Этап I:</p>
+                <p>Этап II:</p>
+                <p>Этап III:</p>
+            </div>
+            <div class="column_numbers">
+                <div class="stages">
+                    <div class="green green1"></div>
+                    <div class="brown brown1"></div>
+                    <div class="blue blue1"></div>
+                </div>
+                <div class="stages">
+                    <div class="green green2"></div>
+                    <div class="brown brown2"></div>
+                    <div class="blue blue2"></div>
+                </div>
+                <div class="stages">
+                    <div class="green green3"></div>
+                    <div class="brown brown3"></div>
+                    <div class="blue blue3"></div>
+                </div>
+            </div>
+        </div> 
+        <div class="cardsChecked">
+            <img class="mythicCardBackground" src="./src/assets/mythicCardBackground.png" alt="mythicCardBackground">
+            <div class="opencard"></div>
+        </div>
+    </div>
+    
+   </div> 
+   <script src="dist/bundle.js"></script>   
+</body>
+</html>
