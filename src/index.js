@@ -17,6 +17,8 @@ const Azathoth = document.querySelector('.Azathoth');
 const Cthulhu = document.querySelector('.Cthulhu');
 const YogSothoth = document.querySelector('.YogSothoth');
 const ShubNiggurath = document.querySelector('.ShubNiggurath');
+const cardDeck = document.querySelector('.mythicCardBackground');
+const viewCardDeck = document.querySelector('.opencard');
 
 const card = document.querySelector('.card');
 
@@ -228,14 +230,75 @@ function stageDesk (firstDesk, matrix, color, stage) {
 // console.log(test1);
 
 let arr =[];
-const firstStageDesk = arr.concat(stageDesk(firstGreenDesk, matrixAzathoth, green, stage1), stageDesk(firstBrownDesk, matrixAzathoth, brown, stage1), stageDesk(firstBlueDesk, matrixAzathoth, blue, stage1));
-const secondStageDesk = arr.concat(stageDesk(firstGreenDesk, matrixAzathoth, green, stage2), stageDesk(firstBrownDesk, matrixAzathoth, brown, stage2), stageDesk(firstBlueDesk, matrixAzathoth, blue, stage2));
-const thirdStageDesk = arr.concat(stageDesk(firstGreenDesk, matrixAzathoth, green, stage3), stageDesk(firstBrownDesk, matrixAzathoth, brown, stage3), stageDesk(firstBlueDesk, matrixAzathoth, blue, stage3));
+const firstStageDeck = arr.concat(stageDesk(firstGreenDesk, matrixAzathoth, green, stage1), stageDesk(firstBrownDesk, matrixAzathoth, brown, stage1), stageDesk(firstBlueDesk, matrixAzathoth, blue, stage1));
+const secondStageDeck = arr.concat(stageDesk(firstGreenDesk, matrixAzathoth, green, stage2), stageDesk(firstBrownDesk, matrixAzathoth, brown, stage2), stageDesk(firstBlueDesk, matrixAzathoth, blue, stage2));
+const thirdStageDeck = arr.concat(stageDesk(firstGreenDesk, matrixAzathoth, green, stage3), stageDesk(firstBrownDesk, matrixAzathoth, brown, stage3), stageDesk(firstBlueDesk, matrixAzathoth, blue, stage3));
 
-console.log(firstStageDesk);
-console.log(secondStageDesk);
-console.log(thirdStageDesk);
+console.log(firstStageDeck);
+console.log(secondStageDeck);
+console.log(thirdStageDeck);
 
 // const test = stageDesk(firstGreenDesk, matrixAzathoth, green, stage1);
 // console.log(test);
 // console.log(firstGreenDesk);
+
+/* нужно перетасовать колоды этапов*/
+
+// function shuffle(array) {
+//   for (let i = array.length - 1; i > 0; i--) {
+//     let j = Math.floor(Math.random() * (i + 1)); // случайный индекс от 0 до i
+//     [array[i], array[j]] = [array[j], array[i]];
+//   }
+// }
+
+// const shuffle = (deck) => {
+//   for (let i = deck.length - 1; i > 0; i--) {
+//     const j = Math.floor(Math.random() * (i + 1));
+//     const temp = deck[i];
+//     deck[i] = deck[j];
+//     deck[j] = temp;
+//   }
+//   return deck;
+// }
+
+const shuffle = (deck) => [...deck].sort(() => Math.random() - 0.5);
+
+const shuffleFirstStage = shuffle(firstStageDeck);
+const shuffleSecondStage = shuffle(secondStageDeck);
+const shuffleThirdStage = shuffle(thirdStageDeck);
+
+console.log(shuffleFirstStage);
+console.log(shuffleSecondStage);
+console.log(shuffleThirdStage);
+
+/*теперь складываю колоды этапов друг на друга, сначала 3 потом 2 потом 1 */
+
+Array.prototype.push.apply(shuffleThirdStage, shuffleSecondStage);
+Array.prototype.push.apply(shuffleThirdStage, shuffleFirstStage);
+const deck = shuffleThirdStage;
+console.log(deck);
+
+/*теперь карты по одной должны открываться по клику на рубашку*/
+
+
+function openCard () {
+  let result =[];
+    result = deck.pop();
+    console.log(result);
+    return result;
+  }
+
+function viewCard() {
+  const img = new Image();
+  img.src = `${openCard().cardFace}`;
+  viewCardDeck.style.backgroundImage = `url('${img.src}')`;
+  // viewCardDeck.style.width  = "188px";
+  // viewCardDeck.style.height = "275px";
+  // viewCardDeck.style.borderRadius = '10px';
+
+}  
+
+cardDeck.addEventListener("click", viewCard);
+
+
+
