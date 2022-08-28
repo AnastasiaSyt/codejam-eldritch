@@ -6,6 +6,7 @@ const path = require('path');
      filename: 'bundle.js',
      path: path.resolve(__dirname, 'dist'),
    },
+   devtool: 'source-map',
    module: {
      rules: [
        {
@@ -16,6 +17,11 @@ const path = require('path');
          test: /\.(png|svg|jpg|jpeg|gif)$/i,
          type: 'asset/resource',
        },
+        {
+          test: /\.js$/,
+          enforce: "pre",
+          use: ["source-map-loader"],
+        },
      ],
    },
  };

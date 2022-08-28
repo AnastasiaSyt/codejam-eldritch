@@ -1,17 +1,10 @@
 
-// import {
-//   brownCards,
-//   blueCards,
-//   greenCards
-// }  from './data/mythicCards/index.js'
-
 import brownCardsData from './data/mythicCards/brown/index.js';
 import greenCardsData from './data/mythicCards/green/index.js';
 import blueCardsData from './data/mythicCards/blue/index.js';
 import ancientsData from './data/ancients.js'
-
-// const testir = brownCardsData[3];
-// console.log(testir);
+import { ImageCards } from './constants/imageCards.js';
+import { deckIdlevels } from './constants/deckIdlevels.js';
 
 const Azathoth = document.querySelector('.Azathoth');
 const Cthulhu = document.querySelector('.Cthulhu');
@@ -20,7 +13,8 @@ const ShubNiggurath = document.querySelector('.ShubNiggurath');
 const cardDeck = document.querySelector('.mythicCardBackground');
 const viewCardDeck = document.querySelector('.opencard');
 
-const card = document.querySelector('.card');
+const card = document.getElementsByClassName('card');
+const level = document.getElementsByClassName('tags');
 
 let blue1 = document.querySelector('.blue1');
 let blue2 = document.querySelector('.blue2');
@@ -72,7 +66,6 @@ const matrixShubNiggurath = [
   1 колонка - коричневый
   2 колонка - синий
 */
-
 function showSumByColumn(matrix) {
   let sumResults = [];
   let sum;
@@ -88,14 +81,15 @@ function showSumByColumn(matrix) {
 console.log(sumResults);
 return sumResults;
 }
+// showSumByColumn(matrix);
+// showSumByColumn(matrixAzathoth);
 
-showSumByColumn(matrixAzathoth);
-
-/* функция, которая добавляет значения
-  для каждого этапа в зависимости от 
-  выбранного Древнего
-*/
-
+/**
+ * функция, которая добавляет значения
+ * для каждого этапа в зависимости от 
+ * выбранного Древнего
+ * @param {number[][]} matrix 
+ */
 function addNumbers(matrix) {
     green1.textContent = matrix[0][0];
     brown1.textContent = matrix[0][1];
@@ -110,11 +104,110 @@ function addNumbers(matrix) {
     blue3.textContent = matrix[2][2];
   };
 
-  
-  Azathoth.addEventListener("click", () => addNumbers(matrixAzathoth));
-  Cthulhu.addEventListener("click", () => addNumbers(matrixCthulhu));
-  YogSothoth.addEventListener("click", () => addNumbers(matrixYogSothoth));
-  ShubNiggurath.addEventListener("click", () => addNumbers(matrixShubNiggurath));
+/**
+ * Get if of card be click event
+ * @param {PointerEvent} event 
+ * @returns {string}
+ */
+function getIdCard(event) {
+  return event.target.id;
+}
+
+/**
+ * add class selected to ancients card
+ * @param {string} cardId 
+ */
+function toggleCard (cardId) {
+  const ancient = document.getElementById(cardId);
+  Array.prototype.forEach.call(card, (item) => {
+    item.classList.remove('checked');
+  })
+  // card.classList.remove("checked");
+  ancient.classList.add("checked");
+}
+
+Array.prototype.forEach.call(card, (item) => {
+  item.addEventListener("click", cardClickHandler);
+});
+
+/**
+ * Handlaer for card click
+ * selects an Ancients card and adds numbers to Mythos Deck
+ * @param {MouseEvent} event 
+ */
+function cardClickHandler(event) {
+   const cardId = getIdCard(event);
+   const matrix = ImageCards[cardId];
+   if (matrix) {
+     addNumbers(matrix);
+     toggleCard (cardId);
+   } else {
+     alert('game over, id Ancients card not exist');
+   }
+}
+
+//__________________________________________________________
+
+/**
+ * Get id of level by click event
+ * @param {PointerEvent} event 
+ * @returns {string}
+ */
+ function getIdLevel(event) {
+  return event.target.id;
+}
+
+/**
+ * add class selected to level tag
+ * @param {string} levelId
+ */
+ function toggleLevel (levelId) {
+  const levelButton = document.getElementById(levelId);
+  Array.prototype.forEach.call(level, (item) => {
+    item.classList.remove('checked_level');
+  })
+  levelButton.classList.add("checked_level");
+}
+
+Array.prototype.forEach.call(level, (item) => {
+  item.addEventListener("click", levelClickHandler);
+});
+
+/**
+ * Handlaer for level click
+ * selects level and create new Deck
+ * @param {MouseEvent} event 
+ */
+function levelClickHandler(event) {
+   const levelId = getIdLevel(event);
+   const dataLevelId = deckIdlevels[levelId];
+  console.log(dataLevelId);
+   toggleLevel (levelId);
+  //  if (matrix) {
+  //    addNumbers(matrix);
+  //    toggleCard (levelId);
+  //  } else {
+  //    alert('game over, id Ancients card not exist');
+  //  }
+}
+
+
+/**
+ * 1) По выбранному уровню сложности отфильтрофвать оригинальный массив
+ * 2) Если очень сложный - сперва фильтруем по щупальцам, затем добавля.ешь недостующие обычные
+ * 3) 
+ * @param {*} deck 
+ * @returns 
+ */
+//  function createNewOriginalDeck(deck) {
+//   let result;
+//   if(easy) {
+//     result = deck.filter(deck.difficulty == 'easy');
+//   } else if
+// }
+
+
+  // card.addEventListener("click", () => addNumbers(matrixShubNiggurath));
 
 
 //  __________________________________________________________
@@ -234,32 +327,10 @@ const firstStageDeck = arr.concat(stageDesk(firstGreenDesk, matrixAzathoth, gree
 const secondStageDeck = arr.concat(stageDesk(firstGreenDesk, matrixAzathoth, green, stage2), stageDesk(firstBrownDesk, matrixAzathoth, brown, stage2), stageDesk(firstBlueDesk, matrixAzathoth, blue, stage2));
 const thirdStageDeck = arr.concat(stageDesk(firstGreenDesk, matrixAzathoth, green, stage3), stageDesk(firstBrownDesk, matrixAzathoth, brown, stage3), stageDesk(firstBlueDesk, matrixAzathoth, blue, stage3));
 
-console.log(firstStageDeck);
-console.log(secondStageDeck);
-console.log(thirdStageDeck);
 
-// const test = stageDesk(firstGreenDesk, matrixAzathoth, green, stage1);
-// console.log(test);
-// console.log(firstGreenDesk);
 
-/* нужно перетасовать колоды этапов*/
 
-// function shuffle(array) {
-//   for (let i = array.length - 1; i > 0; i--) {
-//     let j = Math.floor(Math.random() * (i + 1)); // случайный индекс от 0 до i
-//     [array[i], array[j]] = [array[j], array[i]];
-//   }
-// }
 
-// const shuffle = (deck) => {
-//   for (let i = deck.length - 1; i > 0; i--) {
-//     const j = Math.floor(Math.random() * (i + 1));
-//     const temp = deck[i];
-//     deck[i] = deck[j];
-//     deck[j] = temp;
-//   }
-//   return deck;
-// }
 
 const shuffle = (deck) => [...deck].sort(() => Math.random() - 0.5);
 
@@ -267,16 +338,8 @@ const shuffleFirstStage = shuffle(firstStageDeck);
 const shuffleSecondStage = shuffle(secondStageDeck);
 const shuffleThirdStage = shuffle(thirdStageDeck);
 
-console.log(shuffleFirstStage);
-console.log(shuffleSecondStage);
-console.log(shuffleThirdStage);
-
 /*теперь складываю колоды этапов друг на друга, сначала 3 потом 2 потом 1 */
-
-Array.prototype.push.apply(shuffleThirdStage, shuffleSecondStage);
-Array.prototype.push.apply(shuffleThirdStage, shuffleFirstStage);
-const deck = shuffleThirdStage;
-console.log(deck);
+const deck = [shuffleThirdStage, shuffleSecondStage, shuffleFirstStage].flat();
 
 /*теперь карты по одной должны открываться по клику на рубашку*/
 
@@ -289,9 +352,18 @@ function openCard () {
   }
 
 function viewCard() {
-  const img = new Image();
-  img.src = `${openCard().cardFace}`;
-  viewCardDeck.style.backgroundImage = `url('${img.src}')`;
+  const newCard = openCard();
+  if (newCard) {
+    const img = new Image();
+    img.src = `${newCard.cardFace}`;
+    img.className = 'mythicCardBackground';
+    viewCardDeck.childNodes.forEach(node => viewCardDeck.removeChild(node));
+    // viewCardDeck.style.backgroundImage = `url('${img.src}')`;
+    viewCardDeck.append(img);
+  } else {
+    alert('No more cards');
+  }
+  
   // viewCardDeck.style.width  = "188px";
   // viewCardDeck.style.height = "275px";
   // viewCardDeck.style.borderRadius = '10px';
